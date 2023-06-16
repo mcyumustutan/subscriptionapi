@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\MockApiController;
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,11 +17,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/device/register', [DeviceController::class, 'register']);
+Route::post('/mock/check/{receipt}', [MockApiController::class, 'check']);
 
 Route::group([
-    'prefix' => 'device',
+    'prefix' => 'subscribe',
     'middleware' => ['auth:sanctum']
 ], function () {
-    Route::get('/purchase', [DeviceController::class, 'purchase']);
-    Route::get('/checkSubscription', [DeviceController::class, 'checkSubscription']);
+    Route::get('/purchase', [SubscriptionController::class, 'purchase']);
+    Route::get('/checkSubscription', [SubscriptionController::class, 'checkSubscription']);
 });
