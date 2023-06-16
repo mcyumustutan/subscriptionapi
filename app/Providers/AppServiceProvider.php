@@ -3,17 +3,24 @@
 namespace App\Providers;
 
 use App\Interfaces\DeviceInterface;
+use App\Interfaces\SubscriptionInterface;
 use App\Repositories\DeviceRepository;
+use App\Repositories\SubscriptionRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+    public $bindings = [
+        DeviceInterface::class => DeviceRepository::class,
+        SubscriptionInterface::class => SubscriptionRepository::class
+    ];
+
     /**
      * Register any application services.
      */
     public function register(): void
     {
-        app()->bind(DeviceInterface::class, DeviceRepository::class);
+        //
     }
 
     /**
