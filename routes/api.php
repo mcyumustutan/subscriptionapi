@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\DevicesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/device/register', [DevicesController::class, 'register']);
+
+Route::group([
+    'prefix' => 'device',
+    'middleware' => ['auth:sanctum']
+], function () {
+    Route::get('/purchase', [DeviceController::class, 'purchase']);
+    Route::get('/checkSubscription', [DeviceController::class, 'checkSubscription']);
 });
