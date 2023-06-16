@@ -24,5 +24,5 @@ Route::group([
     'middleware' => ['auth:sanctum']
 ], function () {
     Route::get('/purchase', [SubscriptionController::class, 'purchase']);
-    Route::get('/checkSubscription', [SubscriptionController::class, 'checkSubscription']);
+    Route::get('/check', [SubscriptionController::class, 'check']);
 });
