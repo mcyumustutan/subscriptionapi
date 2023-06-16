@@ -34,11 +34,5 @@ class SubscriptionController extends Controller
         );
 
         return response()->json($this->subscriptionRepository->subscription($form), 201);
-
-
-        // PurchaseAction gönder, 
-        // Action içinde ilgili os değerine göre mock apiye gönder
-        // gelen cevaba göre dbye işle
-
     }
 }
