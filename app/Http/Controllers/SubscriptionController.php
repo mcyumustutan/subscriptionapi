@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Actions\ValidationAction;
 use App\Http\Requests\StoreSubscriptionRequest;
-use App\Repositories\SubscriptionRepository;
+use App\Interfaces\SubscriptionInterface;
 
 class SubscriptionController extends Controller
 {
 
     public function __construct(
         private ValidationAction $validationAction,
-        private SubscriptionRepository $subscriptionRepository
+        private SubscriptionInterface $subscriptionInterface
     ) {
     }
 
@@ -33,6 +33,11 @@ class SubscriptionController extends Controller
             collect($authorized_device_id)->toArray()
         );
 
-        return response()->json($this->subscriptionRepository->subscription($form), 201);
+        return response()->json($this->subscriptionInterface->subscription($form), 201);
+    }
+
+    public function check()
+    {
+        return response()->json($this->subscriptionInterface->check(auth()->user()->id), 200);
     }
 }

@@ -29,4 +29,9 @@ class SubscriptionRepository implements SubscriptionInterface
 
         return $subs;
     }
+
+    public function check(int $id)
+    {
+        return Subscription::where("device_id", $id)->get();
+    }
 }
