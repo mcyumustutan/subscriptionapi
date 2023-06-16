@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Os;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class StoreDevicesRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class StoreDevicesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,10 @@ class StoreDevicesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'uid' => 'required|string|max:255',
+            'appId' => 'required|string|max:255',
+            'language' => 'required|string|max:255',
+            'os' => [new Enum(Os::class)],
         ];
     }
 }
