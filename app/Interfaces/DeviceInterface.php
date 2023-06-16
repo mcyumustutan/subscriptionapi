@@ -6,5 +6,5 @@ use App\Models\Device;
 
 interface DeviceInterface
 {
-    public function register(): Device;
+    public function register(array $form);
 }
