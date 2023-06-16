@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\DevicesController;
+use App\Http\Controllers\DeviceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/device/register', [DevicesController::class, 'register']);
+Route::post('/device/register', [DeviceController::class, 'register']);
 
 Route::group([
     'prefix' => 'device',

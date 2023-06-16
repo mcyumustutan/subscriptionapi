@@ -6,7 +6,7 @@ use App\Enums\Os;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 
-class StoreDevicesRequest extends FormRequest
+class StoreDeviceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

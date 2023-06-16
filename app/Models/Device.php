@@ -6,7 +6,7 @@ use App\Enums\Os;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Devices extends Model
+class Device extends Model
 {
     use HasFactory;
 
