@@ -33,11 +33,12 @@ class SubscriptionController extends Controller
             return response()->json($validationResult, 200);
         }
 
-        return response()->json($this->subscriptionInterface->subscription(
+        $subscriptionResult = $this->subscriptionInterface->subscription(
             $validationResult['expire-date'],
             $authorizedDevice->id,
-            $receiptHash
-        ), Response::HTTP_CREATED);
+            $receiptHash);
+
+        return response()->json($subscriptionResult, Response::HTTP_CREATED);
     }
 
     /**
