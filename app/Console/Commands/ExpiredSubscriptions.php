@@ -6,7 +6,6 @@ use App\Actions\ValidationAction;
 use App\Interfaces\SubscriptionInterface;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Log;
 
 class ExpiredSubscriptions extends Command
 {
@@ -38,7 +37,7 @@ class ExpiredSubscriptions extends Command
      */
     public function handle()
     {
-        $subscriptions = $this->subscriptionInterface->getExpiredsNonCanceled()
+        $this->subscriptionInterface->getExpiredsNonCanceled()
             ->chunk(200, function (Collection $subscriptions) {
                 foreach ($subscriptions as $subscription) {
 
