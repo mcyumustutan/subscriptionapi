@@ -33,14 +33,11 @@ class SubscriptionController extends Controller
             return response()->json($validationResult, 200);
         }
 
-        $form = array_merge(
-            $validationResult,
-            ['device_id' => $authorizedDevice->id],
-            ['receipt' => $receiptHash],
-            collect($authorizedDevice)->toArray()
-        );
-
-        return response()->json($this->subscriptionInterface->subscription($form), Response::HTTP_CREATED);
+        return response()->json($this->subscriptionInterface->subscription(
+            $validationResult['expire-date'],
+            $authorizedDevice->id,
+            $receiptHash
+        ), Response::HTTP_CREATED);
     }
 
     /**
