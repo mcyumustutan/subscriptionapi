@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('uid', 100);
             $table->string('appId', 100);
-            $table->string('language', 100);
+            $table->integer('language_id');
             $table->string('os', 100);
             $table->timestamps();
         });
