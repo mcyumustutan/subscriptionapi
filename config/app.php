@@ -4,6 +4,15 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | Subscription Url
+    |--------------------------------------------------------------------------
+    |
+    | Abonelik servis url bilgisi
+    |
+    */
+    'subscription_url' => env('SUBSCRIPTION_URL','http://subscriptionsystem.dvl.to/api/mock/check/'),
 
     /*
     |--------------------------------------------------------------------------
