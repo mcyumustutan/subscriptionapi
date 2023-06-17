@@ -16,11 +16,9 @@ return new class extends Migration
             $table->id();
             $table->integer('device_id');
             $table->string('receipt', 255);
-            $table->char('status', 50);
+            $table->char('status', 50)->index();
             $table->dateTime('expire_date', $precision = 0);
             $table->timestamps();
-
-            $table->index(['status']);
         });
     }
 

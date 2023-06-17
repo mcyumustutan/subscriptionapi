@@ -8,7 +8,11 @@ use Illuminate\Support\Str;
 
 class DeviceRepository implements DeviceInterface
 {
-    public function register(array $form)
+    /**
+     * @param array $form
+     * @return mixed
+     */
+    public function register(array $form): string
     {
         $registered_device = Device::firstOrCreate([
             'uid' => $form['uid'],
@@ -23,8 +27,12 @@ class DeviceRepository implements DeviceInterface
 
         $registered_device->tokens()->delete();
 
-        $token = $registered_device->createToken(Str::of($form['uid'])->append('_')->append($form['appId'])->append('-token'))->plainTextToken;
+        return $registered_device->createToken(
+            Str::of($form['uid'])
+                ->append('_')
+                ->append($form['appId'])
+                ->append('-token'))
+            ->plainTextToken;
 
-        return $token;
     }
 }

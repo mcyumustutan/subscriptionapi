@@ -9,7 +9,8 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Device extends Model
 {
-    use HasFactory, HasApiTokens;
+    use HasFactory;
+    use HasApiTokens;
 
     protected $fillable = [
         'uid',

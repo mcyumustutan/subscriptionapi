@@ -3,21 +3,27 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class MockApiController extends Controller
 {
-    public function check($receipt)
+    /**
+     * @param $receipt
+     * @return JsonResponse
+     */
+    public function check($receipt): JsonResponse
     {
-        $last_char = substr($receipt, -1);
-        $default_status = false;
+        $lastChar = substr($receipt, -1);
+        $defaultStatus = false;
 
-        if (is_numeric($last_char) && $last_char % 2 == 1) {
-            $default_status = true;
+        if (is_numeric($lastChar) && $lastChar % 2 == 1) {
+            $defaultStatus = true;
         }
 
         return response()->json([
-            'status' => $default_status,
+            'status' => $defaultStatus,
             'expire-date' => Carbon::now()->add(1, 'day')->format('Y-m-d H:i:s')
-        ], 200);
+        ], Response::HTTP_OK);
     }
 }

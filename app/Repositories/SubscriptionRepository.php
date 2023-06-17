@@ -4,13 +4,16 @@ namespace App\Repositories;
 
 use App\Enums\SubscriptionStatus;
 use App\Interfaces\SubscriptionInterface;
-use App\Models\Device;
 use App\Models\Subscription;
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Collection;
 
 class SubscriptionRepository implements SubscriptionInterface
 {
-    public function subscription(array $form)
+    /**
+     * @param array $form
+     * @return mixed
+     */
+    public function subscription(array $form): Subscription
     {
         $subs = Subscription::updateOrCreate([
             'device_id' => $form['device_id'],
@@ -30,7 +33,11 @@ class SubscriptionRepository implements SubscriptionInterface
         return $subs;
     }
 
-    public function check(int $id)
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    public function getByDeviceId(int $id): Collection
     {
         return Subscription::where("device_id", $id)->get();
     }

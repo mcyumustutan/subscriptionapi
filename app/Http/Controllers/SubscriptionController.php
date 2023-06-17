@@ -5,39 +5,49 @@ namespace App\Http\Controllers;
 use App\Actions\ValidationAction;
 use App\Http\Requests\StoreSubscriptionRequest;
 use App\Interfaces\SubscriptionInterface;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class SubscriptionController extends Controller
 {
 
     public function __construct(
-        private ValidationAction $validationAction,
-        private SubscriptionInterface $subscriptionInterface
-    ) {
+        private readonly ValidationAction      $validationAction,
+        private readonly SubscriptionInterface $subscriptionInterface
+    )
+    {
     }
 
-    public function purchase(StoreSubscriptionRequest $request)
+    /**
+     * @param StoreSubscriptionRequest $request
+     * @return JsonResponse
+     */
+    public function purchase(StoreSubscriptionRequest $request): JsonResponse
     {
-        $authorized_device_id = auth()->user();
-        $receipt_hash = $request->validated('receipt');
+        $authorizedDevice = auth()->user();
+        $receiptHash = $request->validated('receipt');
 
-        $validation_result = $this->validationAction->execute($receipt_hash);
+        $validationResult = $this->validationAction->execute($receiptHash);
 
-        if ($validation_result['status'] == false) {
-            return response()->json($validation_result, 200);
+        if (!$validationResult['status']) {
+            return response()->json($validationResult, 200);
         }
 
         $form = array_merge(
-            $validation_result,
-            ['device_id' => $authorized_device_id->id],
-            ['receipt' => $receipt_hash],
-            collect($authorized_device_id)->toArray()
+            $validationResult,
+            ['device_id' => $authorizedDevice->id],
+            ['receipt' => $receiptHash],
+            collect($authorizedDevice)->toArray()
         );
 
-        return response()->json($this->subscriptionInterface->subscription($form), 201);
+        return response()->json($this->subscriptionInterface->subscription($form), Response::HTTP_CREATED);
     }
 
-    public function check()
+    /**
+     * @return JsonResponse
+     */
+    public function check(): JsonResponse
     {
-        return response()->json($this->subscriptionInterface->check(auth()->user()->id), 200);
+        return response()->json($this->subscriptionInterface->getByDeviceId(auth()->user()->id), Response::HTTP_OK);
     }
 }
