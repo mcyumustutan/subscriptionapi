@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Enums\SubscriptionStatus;
 use App\Interfaces\SubscriptionInterface;
 use App\Models\Subscription;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 class SubscriptionRepository implements SubscriptionInterface
@@ -13,15 +14,15 @@ class SubscriptionRepository implements SubscriptionInterface
      * @param array $form
      * @return mixed
      */
-    public function subscription(array $form): Subscription
+    public function subscription(string $expireDate,int $deviceId, string $receipt): Subscription
     {
         $subs = Subscription::updateOrCreate([
-            'device_id' => $form['device_id'],
-            'receipt' => $form['receipt'],
+            'device_id' => $deviceId,
+            'receipt' => $receipt,
         ], [
-            'device_id' => $form['device_id'],
-            'receipt' => $form['receipt'],
-            'expire_date' => $form['expire-date'],
+            'device_id' => $deviceId,
+            'receipt' => $receipt,
+            'expire_date' => $expireDate,
             'status' => SubscriptionStatus::STARTED
         ]);
 
@@ -40,5 +41,10 @@ class SubscriptionRepository implements SubscriptionInterface
     public function getByDeviceId(int $id): Collection
     {
         return Subscription::where("device_id", $id)->get();
+    }
+
+    public function getExpiredsNonCanceled(): Builder
+    {
+        return Subscription::noncanceled()->expireds();
     }
 }
