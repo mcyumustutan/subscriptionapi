@@ -3,11 +3,18 @@
 namespace App\Repositories;
 
 use App\Interfaces\DeviceInterface;
+use App\Interfaces\LanguageInterface;
 use App\Models\Device;
+use App\Models\Language;
 use Illuminate\Support\Str;
 
 class DeviceRepository implements DeviceInterface
 {
+
+    public function __construct(private readonly LanguageInterface $languageInterface)
+    {
+    }
+
     /**
      * @param array $form
      * @return mixed
@@ -20,7 +27,7 @@ class DeviceRepository implements DeviceInterface
         ], [
             'uid' => $form['uid'],
             'appId' => $form['appId'],
-            'language' => $form['language'],
+            'language_id' => $this->languageInterface->getIdByLanguageCode($form['language']),
             'os' => $form['os'],
         ]);
 
