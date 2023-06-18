@@ -43,7 +43,7 @@ class ExpiredSubscriptions extends Command
 
                     $validationResult = $this->validationAction->execute($subscription->receipt);
                     if (!$validationResult['status']) {
-                        return response()->json($validationResult, 200);
+                        return self::FAILURE;
                     }
 
                     $this->subscriptionInterface->subscription(
@@ -53,6 +53,6 @@ class ExpiredSubscriptions extends Command
                     );
                 }
             });
-
+        return self::SUCCESS;
     }
 }
