@@ -23,7 +23,7 @@ class MockApiController extends Controller
 
         return response()->json([
             'status' => $defaultStatus,
-            'expire-date' => Carbon::now()->add(1, 'day')->format('Y-m-d H:i:s')
+            'expire-date' => Carbon::now()->add(1, 'day')->toDateTimeString()
         ], Response::HTTP_OK);
     }
 }
