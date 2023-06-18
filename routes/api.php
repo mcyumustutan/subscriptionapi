@@ -19,10 +19,12 @@ use Illuminate\Support\Facades\Route;
 Route::post('/device/register', [DeviceController::class, 'register']);
 Route::post('/mock/check/{receipt}', [MockApiController::class, 'check']);
 
-Route::group([
-    'prefix' => 'subscribe',
-    'middleware' => ['auth:sanctum']
-], function () {
-    Route::get('/purchase', [SubscriptionController::class, 'purchase']);
-    Route::get('/check', [SubscriptionController::class, 'check']);
-});
+Route::middleware(['auth:sanctum'])
+    ->group(function () {
+        Route::controller(SubscriptionController::class)
+            ->prefix('subscribe')
+            ->group(function () {
+                Route::get('/purchase', 'purchase');
+                Route::get('/check', 'check');
+            });
+    });
